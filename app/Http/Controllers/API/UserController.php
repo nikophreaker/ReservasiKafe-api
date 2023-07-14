@@ -80,6 +80,7 @@ class UserController extends BaseController
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             $user = Auth::user();
             $success =  $user;
+            /** @var \App\Models\User $user **/
             $success['token'] =  $user->createToken('ReservasiKafeAuth')->plainTextToken;
             return $this->sendResponse($success, 'User login successfully.');
         } else {
@@ -146,9 +147,9 @@ class UserController extends BaseController
         $validate = Validator::make($request->all(), [
             'first_name' => 'required',
             'last_name' => 'required',
-            'email' => 'required|email:rfc,dns|unique:users,phone_number,' . $user->id,
+            'email' => 'required|email:rfc,dns|unique:users,email,' . $user->id,
             'phone_number' => 'required|string|regex:/(8)[0-9]{8}/|max:15|unique:users,phone_number,' . $user->id,
-            'username' => 'required',
+            'username' => 'required|unique:users,username,' . $user->id,
             'password' => 'required',
         ]);
 
