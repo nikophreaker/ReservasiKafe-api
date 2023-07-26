@@ -80,7 +80,9 @@ class UserController extends BaseController
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             $user = Auth::user();
             $success =  $user;
+            
             /** @var \App\Models\User $user **/
+            $user->tokens()->where('tokenable_id', $user->id)->delete();
             $success['token'] =  $user->createToken('ReservasiKafeAuth')->plainTextToken;
             return $this->sendResponse($success, 'User login successfully.');
         } else {
