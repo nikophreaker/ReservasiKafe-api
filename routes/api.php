@@ -26,6 +26,11 @@ Route::post('login', [UserController::class, 'login']);
 Route::get('users/verify/{id}', [UserController::class, 'verifyEmail'])->name('user.verify');
 
 Route::middleware('auth:sanctum')->group(function () {
+    //     Route::get('users', [UserController::class, 'index']);
+    Route::get('users/{id}', [UserController::class, 'show']);
+    Route::put('users/{id}', [UserController::class, 'update']);
+    //     Route::delete('users/{id}', [UserController::class, 'destroy']);
+
     Route::post('menus', [MenuController::class, 'store'])->middleware('restrictRole:admin');
     Route::put('menus/{id}', [MenuController::class, 'update'])->middleware('restrictRole:admin');
     Route::delete('menus/{id}', [MenuController::class, 'destroy'])->middleware('restrictRole:admin');
@@ -56,10 +61,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('payments/{id}', [PaymentController::class, 'update']);
     Route::delete('payments/{id}', [PaymentController::class, 'destroy']);
 
-    //     Route::get('users', [UserController::class, 'index']);
-    Route::get('users/{id}', [UserController::class, 'show']);
-    Route::put('users/{id}', [UserController::class, 'update']);
-    //     Route::delete('users/{id}', [UserController::class, 'destroy']);
 });
 
 Route::get('menus', [MenuController::class, 'index']);

@@ -86,7 +86,7 @@ class UserController extends BaseController
             $success['token'] =  $user->createToken('ReservasiKafeAuth')->plainTextToken;
             return $this->sendResponse($success, 'User login successfully.');
         } else {
-            return $this->sendError('Unauthorised.', ['error' => 'Unauthorised']);
+            return $this->sendError('Unauthorized.', ['error' => 'Unauthorized']);
         }
     }
 
@@ -95,11 +95,11 @@ class UserController extends BaseController
         $user = User::where('verification_token', $token)->first();
 
         if (!$user) {
-            return $this->sendError('Unauthorised.', ['error' => 'Invalid verification token']);
+            return $this->sendError('Unauthorized.', ['error' => 'Invalid verification token']);
         }
 
         if ($user->verified) {
-            return $this->sendError('Unauthorised.', ['error' => 'Email already verified']);
+            return $this->sendError('Unauthorized.', ['error' => 'Email already verified']);
         }
 
         // Update the user's verification token in the database
