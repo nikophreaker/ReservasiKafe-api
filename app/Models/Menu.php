@@ -18,5 +18,6 @@ class Menu extends Model
         'item_name',
         'description',
         'price',
+        'image',
     ];
 }

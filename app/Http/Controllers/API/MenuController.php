@@ -28,17 +28,24 @@ class MenuController extends BaseController
      */
     public function store(Request $request)
     {
+        $path = $request->file('image')->store('menu');
         $validate = Validator::make($request->all(), [
             'item_name' => 'required',
             'description' => 'required',
             'price' => 'required|integer',
+            'image' => 'required',
         ]);
 
         if ($validate->fails()) {
             return $this->sendError('Add Menu Error.', $validate->errors());
         }
 
-        $menu = Menu::create($request->all());
+        $menu = Menu::create([
+            'item_name' => $request->item_name,
+            'description' => $request->description,
+            'price' => $request->price,
+            'image' => $path,
+        ]);
 
         return $this->sendResponse($menu, 'Add Menu successfully.');
     }
