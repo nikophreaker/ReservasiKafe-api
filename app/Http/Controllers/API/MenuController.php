@@ -16,7 +16,7 @@ class MenuController extends BaseController
      */
     public function index()
     {
-        $menu = Menu::all();
+        $menu = Menu::paginate(5);
         return response()->json($menu);
     }
 
